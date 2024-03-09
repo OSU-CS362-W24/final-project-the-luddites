@@ -1,0 +1,1 @@
+const generateChartImg = require('./generateChartImg');
