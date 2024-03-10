@@ -1,0 +1,1 @@
+const sortPoints = require('./sortPoints');
