@@ -18,6 +18,26 @@ function initDomFromFiles(htmlPath, jsPath) {
     })
 }
 
-test("Something", async function(){
+test("Add values button adds input field for X value", async function(){
     initDomFromFiles(`${__dirname}/line.html`,`${__dirname}/line.js`)
+
+    const addValuesButton = domTesting.getByText(document, "+")
+
+    const user = userEvent.setup()
+    await user.click(addValuesButton)  
+    const xInputs = domTesting.queryAllByText(document, "X")
+    expect(xInputs[1]).not.toBe(undefined)   // Verifies a second X input field was created
+
+})
+
+test("Add values button adds input field for Y value", async function(){
+    initDomFromFiles(`${__dirname}/line.html`,`${__dirname}/line.js`)
+
+    const addValuesButton = domTesting.getByText(document, "+")
+
+    const user = userEvent.setup()
+    await user.click(addValuesButton)  
+    const yInputs = domTesting.queryAllByText(document, "Y")
+    expect(yInputs[1]).not.toBe(undefined)   // Verifies a second Y input field was created
+
 })
