@@ -1,3 +1,5 @@
+var inputPairItr = 0
+
 /*
  * This module contains the "chart builder", which connects to and controls
  * the UI for building a chart.
@@ -206,7 +208,7 @@ module.exports = function runChartBuilder(type) {
         const labelElem = document.createElement("label")
         labelElem.classList.add(`${lowerXOrY}-value`)
         const inputType = (type === "bar" && lowerXOrY === "x") ? "" : "type='number'"
-        labelElem.innerHTML = `${upperXOrY} <input ${inputType} class="${lowerXOrY}-value-input" />`
+        labelElem.innerHTML = `${upperXOrY} <input ${inputType} class="${lowerXOrY}-value-input" data-test-id="${lowerXOrY}${inputPairItr}" />`
         return labelElem
     }
 
@@ -215,6 +217,7 @@ module.exports = function runChartBuilder(type) {
      * value input fields.
      */
     function insertXYInputPair() {
+        inputPairItr += 1
         const xInput = generateXYInput("x")
         const yInput = generateXYInput("y")
         xyDataGrid && xyDataGrid.append(xInput, yInput)
