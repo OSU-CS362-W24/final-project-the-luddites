@@ -1,41 +1,31 @@
 /**
- * @jest-environment jsdom
- */
+* @jest-environment ./src/fixjsdomenvironment.js
+*/
 
-// setup for testing
-const fs = require("fs")
-const domTesting = require('@testing-library/dom')
-const { assert } = require("console")
-const { hasUncaughtExceptionCaptureCallback } = require("process")
-require('@testing-library/jest-dom')
-const userEvent = require("@testing-library/user-event").default
-
-// helper function for initializing dom
-function initDomFromFiles(htmlPath, jsPath) {
-    const html = fs.readFileSync(htmlPath, 'utf8')
-    document.open()
-    document.write(html)
-    document.close()
-    jest.isolateModules(function() {
-        require(jsPath)
-    })
-}
-
+// testing chartStorage.js, so yoink that file
 const chartStorage = require('./chartStorage');
 
 // saveChart tests -----------------------------
 
-// save BAR chart with no index specification
+// save LINE chart with no index specification
 test("saveChart with no index specification", function() {
     // ARRANGE
-    // get stuff from dom via initializing
-    initDomFromFiles(`${__dirname}/../bar/bar.html`, `${__dirname}/chartStorage.js`);
-    // get chart
-    const myChart = document.getElementById("graph");
-    // no index specification
-    const myIndex = null;
+    // set up line chart
+    var myChart = ({
+        type: "line",
+        data: [{x:1,y:3},{x:2,y:7},{x:3,y:15},{x:4,y:28},{x:5,y:50}],
+        xLabel: "Cats",
+        yLabel: "Dogs",
+        title: "Cats vs. Dogs",
+        color: "#ffa500"
+    })
+
     // ACT
-    saveChart(myChart, myIndex);
+    // save chart
+    chartStorage.saveChart(myChart, null);
+
     // ASSERT
-    expect(localStorage.length()).toBe(1);
+    console.log(chartStorage.loadSavedChart(0));
+    console.log(myChart);
+    expect(chartStorage.loadSavedChart(0)).toMatchObject(myChart);
 })
