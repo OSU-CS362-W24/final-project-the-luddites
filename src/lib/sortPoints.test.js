@@ -158,7 +158,7 @@ test('This tests that 10 negative points will be put in acending order with more
             { x: -3, y: 1 },
             { x: -2, y: 1 },
             { x: -1, y: 1 },
-            { x: -0, y: 1 }
+            { x: 0, y: 1 }
 
         ]
     )).toStrictEqual(
@@ -172,7 +172,7 @@ test('This tests that 10 negative points will be put in acending order with more
             { x: -3, y: 1 },
             { x: -2, y: 1 },
             { x: -1, y: 1 },
-            { x: -0, y: 1 }
+            { x: 0, y: 1 }
 
         ]
     );
@@ -350,6 +350,8 @@ test('This tests that points with only a small difference will be sorted', funct
     );
 
 });
+
+
 /*
 Edge Cases
 
