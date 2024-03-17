@@ -15,5 +15,10 @@ jobs:
           node-version: 21
       - run: npm ci
       - run: npm run build
-      - run: npm run test:integration
-      - run: npm run test:e2e
+      - run: npm start
+      - run: npm run test
+      - run: npm run cypress:run
+      - if: ${{ inputs.upload-pages-artifact }}
+        uses: actions/upload-pages-artifact@v1
+        with:
+          path: build/
