@@ -350,6 +350,40 @@ test('This tests that points with only a small difference will be sorted', funct
     );
 
 });
+
+
+test('This tests that really small negative number close to zero will be sorted', function() {
+	expect(sortPoints(
+        [
+            { x: -0.000000005, y: -0.000000005 },
+            { x: -0.000000009, y: -0.000000009 }
+        ]
+    )).toStrictEqual(
+        [
+            { x: -0.000000009, y: -0.000000009 },
+            { x: -0.000000005, y: -0.000000005 }
+        ]
+    );
+
+});
+
+
+test('This tests that really small positive numbers close to zero will be sorted', function() {
+	expect(sortPoints(
+        [
+            { x: 0.000000009, y: 0.000000009 },
+            { x: 0.000000005, y: 0.000000005 }
+        ]
+    )).toStrictEqual(
+        [
+            { x: 0.000000005, y: 0.000000005 },
+            { x: 0.000000009, y: 0.000000009 }
+        ]
+    );
+
+});
+
+
 /*
 Edge Cases
 
