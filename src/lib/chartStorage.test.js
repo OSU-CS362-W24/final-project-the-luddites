@@ -202,3 +202,101 @@ test("loadAllSavedCharts loads multiple saved charts", function() {
     expect(chartStorage.loadAllSavedCharts()[0]).toMatchObject(myChart1);
     expect(chartStorage.loadAllSavedCharts()[1]).toMatchObject(myChart2);
 })
+
+// loadSavedChart tests -----------------------------
+
+test("loadSavedChart loads the saved chart", function() {
+    // ARRANGE
+    // set up chart
+    var myChart = ({
+        type: "line",
+        data: [{x:1,y:3},{x:2,y:7},{x:3,y:15},{x:4,y:28},{x:5,y:50}],
+        xLabel: "Cats",
+        yLabel: "Dogs",
+        title: "Cats vs. Dogs",
+        color: "#ffa500"
+    })
+
+    // ACT
+    // save chart
+    chartStorage.saveChart(myChart, null);
+
+    // ASSERT
+    expect(chartStorage.loadSavedChart(0)).toMatchObject(myChart);
+})
+
+test("loadSavedChart loads chart saved at end of array of charts", function() {
+    // ARRANGE
+    // set up charts
+    var myChart1 = ({
+        type: "line",
+        data: [{x:1,y:3},{x:2,y:7},{x:3,y:15},{x:4,y:28},{x:5,y:50}],
+        xLabel: "Cats",
+        yLabel: "Dogs",
+        title: "Cats vs. Dogs",
+        color: "#ffa500"
+    })
+    var myChart2 = ({
+        type: "scatter",
+        data: [{x:4,y:1},{x:5,y:11},{x:12,y:12},{x:15,y:12}],
+        xLabel: "Mice",
+        yLabel: "Rats",
+        title: "Mice vs. Rats",
+        color: "#ff0000"
+    })
+    var myChart3 = ({
+        type: "bar",
+        data: [{x:"Owls",y:32},{x:"Crows",y:102}],
+        xLabel: "Bird types",
+        yLabel: "Population",
+        title: "Bird populations by type",
+        color: "#0000ff"
+    })
+
+    // ACT
+    // save chart
+    chartStorage.saveChart(myChart1, 0);
+    chartStorage.saveChart(myChart2, 1);
+    chartStorage.saveChart(myChart3, 2);
+
+    // ASSERT
+    expect(chartStorage.loadSavedChart(2)).toMatchObject(myChart3);
+})
+
+test("loadSavedChart loads chart saved in middle of array of charts", function() {
+    // ARRANGE
+    // set up charts
+    var myChart1 = ({
+        type: "line",
+        data: [{x:1,y:3},{x:2,y:7},{x:3,y:15},{x:4,y:28},{x:5,y:50}],
+        xLabel: "Cats",
+        yLabel: "Dogs",
+        title: "Cats vs. Dogs",
+        color: "#ffa500"
+    })
+    var myChart2 = ({
+        type: "scatter",
+        data: [{x:4,y:1},{x:5,y:11},{x:12,y:12},{x:15,y:12}],
+        xLabel: "Mice",
+        yLabel: "Rats",
+        title: "Mice vs. Rats",
+        color: "#ff0000"
+    })
+    var myChart3 = ({
+        type: "bar",
+        data: [{x:"Owls",y:32},{x:"Crows",y:102}],
+        xLabel: "Bird types",
+        yLabel: "Population",
+        title: "Bird populations by type",
+        color: "#0000ff"
+    })
+
+    // ACT
+    // save chart
+    chartStorage.saveChart(myChart1, 0);
+    chartStorage.saveChart(myChart2, 1);
+    chartStorage.saveChart(myChart3, 2);
+
+    // ASSERT
+    expect(chartStorage.loadSavedChart(1)).toMatchObject(myChart2);
+})
