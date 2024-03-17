@@ -342,3 +342,43 @@ test("incomplete chart stored in localStorage", function() {
     const current = window.localStorage.getItem("currentChartData");
     expect(JSON.parse(current)).toMatchObject(myChart);
 })
+
+// loadCurrentChartData tests -----------------------------
+
+test("can load complete but unsaved chart stored in localStorage", function() {
+    // ARRANGE
+    // set up chart
+    var myChart = ({
+        type: "line",
+        data: [{x:1,y:3},{x:2,y:7},{x:3,y:15},{x:4,y:28},{x:5,y:50}],
+        xLabel: "Cats",
+        yLabel: "Dogs",
+        title: "Cats vs. Dogs",
+        color: "#ffa500"
+    })
+
+    // ACT
+    // save chart
+    chartStorage.updateCurrentChartData(myChart);
+
+    // ASSERT
+    expect(chartStorage.loadCurrentChartData()).toMatchObject(myChart);
+})
+
+test("can load incomplete chart stored in localStorage", function() {
+    // ARRANGE
+    // set up chart
+    var myChart = ({
+        type: "line",
+        xLabel: "Cats",
+        yLabel: "Dogs",
+        color: "#ffa500"
+    })
+
+    // ACT
+    // save chart
+    chartStorage.updateCurrentChartData(myChart);
+
+    // ASSERT
+    expect(chartStorage.loadCurrentChartData()).toMatchObject(myChart);
+})
