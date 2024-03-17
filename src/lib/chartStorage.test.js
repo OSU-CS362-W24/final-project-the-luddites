@@ -300,3 +300,45 @@ test("loadSavedChart loads chart saved in middle of array of charts", function()
     // ASSERT
     expect(chartStorage.loadSavedChart(1)).toMatchObject(myChart2);
 })
+
+// updateCurrentChartData tests -----------------------------
+
+test("complete but unsaved chart stored in localStorage", function() {
+    // ARRANGE
+    // set up chart
+    var myChart = ({
+        type: "line",
+        data: [{x:1,y:3},{x:2,y:7},{x:3,y:15},{x:4,y:28},{x:5,y:50}],
+        xLabel: "Cats",
+        yLabel: "Dogs",
+        title: "Cats vs. Dogs",
+        color: "#ffa500"
+    })
+
+    // ACT
+    // save chart
+    chartStorage.updateCurrentChartData(myChart);
+
+    // ASSERT
+    const current = window.localStorage.getItem("currentChartData");
+    expect(JSON.parse(current)).toMatchObject(myChart);
+})
+
+test("incomplete chart stored in localStorage", function() {
+    // ARRANGE
+    // set up chart
+    var myChart = ({
+        type: "line",
+        xLabel: "Cats",
+        yLabel: "Dogs",
+        color: "#ffa500"
+    })
+
+    // ACT
+    // save chart
+    chartStorage.updateCurrentChartData(myChart);
+
+    // ASSERT
+    const current = window.localStorage.getItem("currentChartData");
+    expect(JSON.parse(current)).toMatchObject(myChart);
+})
