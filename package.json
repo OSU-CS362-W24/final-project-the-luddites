@@ -6,6 +6,7 @@
     "build": "webpack",
     "start": "webpack serve --open",
     "cypress:open": "cypress open",
+    "test:e2e": "start-test start http://localhost:3001 cy:run",
     "cypress:run": "cypress run",
     "test": "jest"
   },
