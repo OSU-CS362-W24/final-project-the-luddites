@@ -7,7 +7,7 @@
     "start": "webpack serve --open",
     "start-background": "serve todos -p 3001",
     "cypress:open": "cypress open",
-    "test:e2e": "start-test start-background http://localhost:3001 cypress:run",
+    "test:e2e": "start-test start http://localhost:8080 cypress:run",
     "cypress:run": "cypress run",
     "test": "jest"
   },
