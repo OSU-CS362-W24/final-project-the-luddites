@@ -350,6 +350,74 @@ test('This tests that points with only a small difference will be sorted', funct
     );
 
 });
+
+
+test('This tests that really small negative number close to zero will be sorted', function() {
+	expect(sortPoints(
+        [
+            { x: -0.000000005, y: -0.000000005 },
+            { x: -0.000000009, y: -0.000000009 }
+        ]
+    )).toStrictEqual(
+        [
+            { x: -0.000000009, y: -0.000000009 },
+            { x: -0.000000005, y: -0.000000005 }
+        ]
+    );
+
+});
+
+
+test('This tests that really small positive numbers close to zero will be sorted', function() {
+	expect(sortPoints(
+        [
+            { x: 0.000000009, y: 0.000000009 },
+            { x: 0.000000005, y: 0.000000005 }
+        ]
+    )).toStrictEqual(
+        [
+            { x: 0.000000005, y: 0.000000005 },
+            { x: 0.000000009, y: 0.000000009 }
+        ]
+    );
+
+});
+
+
+test('This tests that 10 potive on the same x axis will be sorted in ascending order', function() {
+	expect(sortPoints(
+        [
+            { x: 3, y: 1 },
+            { x: 3, y: 3 },
+            { x: 3, y: 6 },
+            { x: 3, y: 2 },
+            { x: 3, y: 6 },
+            { x: 3, y: 3 },
+            { x: 3, y: 8 },
+            { x: 3, y: 3 },
+            { x: 3, y: 7 },
+            { x: 3, y: 8 }
+
+        ]
+    )).toStrictEqual(
+        [
+            { x: 3, y: 1 },
+            { x: 3, y: 3 },
+            { x: 3, y: 6 },
+            { x: 3, y: 2 },
+            { x: 3, y: 6 },
+            { x: 3, y: 3 },
+            { x: 3, y: 8 },
+            { x: 3, y: 3 },
+            { x: 3, y: 7 },
+            { x: 3, y: 8 }
+
+        ]
+    );
+
+});
+
+
 /*
 Edge Cases
 
