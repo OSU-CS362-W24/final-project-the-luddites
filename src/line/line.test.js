@@ -14,13 +14,13 @@ function initDomFromFiles(htmlPath, jsPath) {
     document.open()
     document.write(html)
     document.close()
-    jest.isolateModules(function() {
-        require(jsPath)
-    })
+    require(jsPath)
 }
 
-beforeEach(()=> {
+afterEach(()=> {
     window.localStorage.clear()
+    jest.restoreAllMocks()
+    jest.resetModules()
 })
 
 test("Add values button adds input field for X value", async function(){
@@ -75,3 +75,41 @@ test("Add values button doesn't impact any data already entered for Y value", as
     expect(yInputs[0].value).toBe("3")   // Verifies that the data entered after clicking is still 3
 })
 
+test("Error message thrown when generating chart without data", async function(){
+    initDomFromFiles(`${__dirname}/line.html`,`${__dirname}/line.js`)
+
+    const generateChartButton = domTesting.getByText(document, "Generate chart")
+    const spy = jest.spyOn(window, 'alert')
+    spy.mockImplementation(function () {})                          // An empty mock implementation prevents a console implementation error message from happening
+    const user = userEvent.setup()
+    await user.click(generateChartButton)
+
+    expect(spy).toHaveBeenCalled()                                  // Verifies the mock function was called
+    
+    const alertMessage = spy.mock.lastCall[0]                       // Gets the arguments of the last call for the mock function
+
+    expect(alertMessage).toContain("Error: No data specified!")     // Verifies the correct alert message was passed
+
+})
+
+test("Error message thrown when generating chart without labels", async function(){
+    initDomFromFiles(`${__dirname}/line.html`,`${__dirname}/line.js`)
+
+    const generateChartButton = domTesting.getByText(document, "Generate chart")
+    const spy = jest.spyOn(window, 'alert')
+    spy.mockImplementation(function () {})                          // An empty mock implementation prevents a console implementation error message from happening
+    const xInput = domTesting.getByLabelText(document, "X")
+    const yInput = domTesting.getByLabelText(document, "Y")
+
+    const user = userEvent.setup()
+    
+    await user.type(xInput, "1")
+    await user.type(yInput, "3")
+    await user.click(generateChartButton)
+
+    expect(spy).toHaveBeenCalled()                                  // Verifies the mock function was called
+    
+    const alertMessage = spy.mock.lastCall[0]                       // Gets the arguments of the last call for the mock function
+
+    expect(alertMessage).toContain("Error: Must specify a label for both X and Y!")     // Verifies the correct alert message was passed
+})
