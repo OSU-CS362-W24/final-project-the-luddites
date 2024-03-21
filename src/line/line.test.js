@@ -235,4 +235,35 @@ test("Clear chart data button correctly changes the color back to the original c
     expect(chartColor).toHaveValue('#ff4500')                                   // Verifies the value of the color is back to the original color
 })
 
+test("Verifies that data is correctly sent to chart generation function", async function(){
+    initDomFromFiles(`${__dirname}/line.html`,`${__dirname}/line.js`)
 
+    jest.mock("../lib/generateChartImg.js")
+    const generateChartImgSpy = require("../lib/generateChartImg.js")
+    const generateChartButton = domTesting.getByText(document, "Generate chart")
+    generateChartImgSpy.mockImplementation(() => { return 'https://quickchart.io/chart'}); 
+    const chartTitle = domTesting.getByLabelText(document, "Chart title")
+    const xTitle = domTesting.getByLabelText(document, "X label")
+    const yTitle = domTesting.getByLabelText(document, "Y label")
+    const xInput = domTesting.getByLabelText(document, "X")
+    const yInput = domTesting.getByLabelText(document, "Y")
+
+    const user = userEvent.setup()
+    await user.type(chartTitle, "Dogs vs. Cats")
+    await user.type(xTitle, "Dogs")
+    await user.type(yTitle, "cats")
+    await user.type(xInput, "1")
+    await user.type(yInput, "3")
+    await user.click(generateChartButton)
+
+    // Verifies that the spy was called
+    expect(generateChartImgSpy).toHaveBeenCalled()
+
+    // Verifies that the expected info was put into the generateChartImg
+    expect(generateChartImgSpy).toHaveBeenLastCalledWith("line", [{"x": "1", "y": "3"}], "Dogs", "cats", "Dogs vs. Cats", "#ff4500");
+
+    // Gets url from DOM
+    const url = domTesting.getByRole(document,"img")
+    // Verifies that the correct URL was put into the DOM
+    expect(url.src).toContain('https://quickchart.io/chart')
+})
