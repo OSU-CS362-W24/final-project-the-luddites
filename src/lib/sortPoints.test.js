@@ -146,6 +146,40 @@ test('This tests that 10 random order potive points in decending order will be p
 
 });
 
+
+test('This tests that arrays with duplicate values will be returned in ascending order', function() {
+	expect(sortPoints(
+        [
+            { x: 3, y: 1 },
+            { x: 6, y: 1 },
+            { x: 2, y: 1 },
+            { x: 4, y: 1 },
+            { x: 4, y: 1 },
+            { x: 1, y: 1 },
+            { x: 9, y: 1 },
+            { x: 0, y: 1 },
+            { x: 7, y: 1 },
+            { x: 8, y: 1 }
+
+        ]
+    )).toStrictEqual(
+        [
+            { x: 0, y: 1 },
+            { x: 1, y: 1 },
+            { x: 2, y: 1 },
+            { x: 3, y: 1 },
+            { x: 4, y: 1 },
+            { x: 4, y: 1 },
+            { x: 6, y: 1 },
+            { x: 7, y: 1 },
+            { x: 8, y: 1 },
+            { x: 9, y: 1 }
+
+        ]
+    );
+
+});
+
 test('This tests that 10 negative points will be put in acending order with more negative numbers twords the top ', function() {
 	expect(sortPoints(
         [
@@ -323,7 +357,7 @@ test('This tests that only one point will be sorted/returned', function() {
 });
 
 
-test('This tests that no points will return nothing', function() {
+test('This tests that no points and an empty array will return an empty array', function() {
 	expect(sortPoints(
         [
             
@@ -382,6 +416,91 @@ test('This tests that really small positive numbers close to zero will be sorted
     );
 
 });
+
+
+test('This tests that 10 potive on the same x axis will be sorted in ascending order', function() {
+	expect(sortPoints(
+        [
+            { x: 3, y: 1 },
+            { x: 3, y: 3 },
+            { x: 3, y: 6 },
+            { x: 3, y: 2 },
+            { x: 3, y: 6 },
+            { x: 3, y: 3 },
+            { x: 3, y: 8 },
+            { x: 3, y: 3 },
+            { x: 3, y: 7 },
+            { x: 3, y: 8 }
+
+        ]
+    )).toStrictEqual(
+        [
+            { x: 3, y: 1 },
+            { x: 3, y: 3 },
+            { x: 3, y: 6 },
+            { x: 3, y: 2 },
+            { x: 3, y: 6 },
+            { x: 3, y: 3 },
+            { x: 3, y: 8 },
+            { x: 3, y: 3 },
+            { x: 3, y: 7 },
+            { x: 3, y: 8 }
+
+        ]
+    );
+
+});
+
+test('This tests that 10 potive on the same y axis will be sorted in ascending order', function() {
+	expect(sortPoints(
+        [
+            { x: 1, y: 3 },
+            { x: 9, y: 3 },
+            { x: 3, y: 3 },
+            { x: 7, y: 3 },
+            { x: 5, y: 3 },
+            { x: 6, y: 3 },
+            { x: 4, y: 3 },
+            { x: 8, y: 3 },
+            { x: 2, y: 3 },
+            { x: 10, y: 3 }
+
+        ]
+    )).toStrictEqual(
+        [
+            { x: 1, y: 3 },
+            { x: 2, y: 3 },
+            { x: 3, y: 3 },
+            { x: 4, y: 3 },
+            { x: 5, y: 3 },
+            { x: 6, y: 3 },
+            { x: 7, y: 3 },
+            { x: 8, y: 3 },
+            { x: 9, y: 3 },
+            { x: 10, y: 3 }
+
+        ]
+    );
+
+});
+
+test('This tests that a really big number and a really small number will be sorted correctly in ascending order', function() {
+	expect(sortPoints(
+        [
+            { x: 123456789123456789, y: 123456789123456789 },
+            { x: -123456789123456789, y: -123456789123456789 }
+        ]
+    )).toStrictEqual(
+        [
+            { x: -123456789123456789, y: -123456789123456789 },
+            { x: 123456789123456789, y: 123456789123456789 }
+        ]
+    );
+
+});
+
+
+
 
 
 /*
