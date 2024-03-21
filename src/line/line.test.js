@@ -75,7 +75,7 @@ test("Add values button doesn't impact any data already entered for Y value", as
     expect(yInputs[0].value).toBe("3")   // Verifies that the data entered after clicking is still 3
 })
 
-test("Error message thrown when generating chart without data", async function(){
+test("Error message displayed when generating chart without data", async function(){
     initDomFromFiles(`${__dirname}/line.html`,`${__dirname}/line.js`)
 
     const generateChartButton = domTesting.getByText(document, "Generate chart")
@@ -92,7 +92,7 @@ test("Error message thrown when generating chart without data", async function()
 
 })
 
-test("Error message thrown when generating chart without labels", async function(){
+test("Error message displayed when generating chart without labels", async function(){
     initDomFromFiles(`${__dirname}/line.html`,`${__dirname}/line.js`)
 
     const generateChartButton = domTesting.getByText(document, "Generate chart")
