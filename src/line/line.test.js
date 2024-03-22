@@ -79,9 +79,13 @@ test("Error message displayed when generating chart without data", async functio
     initDomFromFiles(`${__dirname}/line.html`,`${__dirname}/line.js`)
 
     const generateChartButton = domTesting.getByText(document, "Generate chart")
+    const xLabel = domTesting.getByLabelText(document, "X label")
+    const yLabel = domTesting.getByLabelText(document, "Y label")
     const spy = jest.spyOn(window, 'alert')
     spy.mockImplementation(function () {})                          // An empty mock implementation prevents a console implementation error message from happening
     const user = userEvent.setup()
+    await user.type(xLabel, "Cats")                                 // The chart will have labels but no data
+    await user.type(yLabel, "Dogs") 
     await user.click(generateChartButton)
 
     expect(spy).toHaveBeenCalled()                                  // Verifies the mock function was called
@@ -103,7 +107,7 @@ test("Error message displayed when generating chart without labels", async funct
 
     const user = userEvent.setup()
     
-    await user.type(xInput, "1")
+    await user.type(xInput, "1")                                    // The chart will have data but no labels
     await user.type(yInput, "3")
     await user.click(generateChartButton)
 
