@@ -241,7 +241,8 @@ test("Verifies that data is correctly sent to chart generation function", async 
     jest.mock("../lib/generateChartImg.js")
     const generateChartImgSpy = require("../lib/generateChartImg.js")
     const generateChartButton = domTesting.getByText(document, "Generate chart")
-    generateChartImgSpy.mockImplementation(() => { return 'https://quickchart.io/chart'}); 
+    // The mock implementation returns a valid image URL for a line graph
+    generateChartImgSpy.mockImplementation(() => { return 'https://datavizproject.com/wp-content/uploads/types/Line-Graph.png'}); 
     const chartTitle = domTesting.getByLabelText(document, "Chart title")
     const xTitle = domTesting.getByLabelText(document, "X label")
     const yTitle = domTesting.getByLabelText(document, "Y label")
@@ -265,5 +266,5 @@ test("Verifies that data is correctly sent to chart generation function", async 
     // Gets url from DOM
     const url = domTesting.getByRole(document,"img")
     // Verifies that the correct URL was put into the DOM
-    expect(url.src).toContain('https://quickchart.io/chart')
+    expect(url.src).toContain('https://datavizproject.com/wp-content/uploads/types/Line-Graph.png')
 })
