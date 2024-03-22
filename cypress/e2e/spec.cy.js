@@ -3,6 +3,7 @@ describe('Charts', () => {
     cy.visit('localhost:8080')
 
     cy.contains("Line").click()
+    cy.contains("Chart title").type("Cats vs Dogs")
     cy.contains("X label").type("Cats")
     cy.contains("Y label").type("Dogs")
 
@@ -38,6 +39,7 @@ describe('Charts', () => {
     cy.visit('localhost:8080')
 
     cy.contains("Line").click()
+    cy.contains("Chart title").type("Cats vs Dogs")
     cy.contains("X label").type("Cats")
     cy.contains("Y label").type("Dogs")
 
@@ -77,6 +79,10 @@ describe('Charts', () => {
     cy.get("[data-test-id='x5']").should("have.value", "5")
     cy.get("[data-test-id='y5']").should("have.value", "40")
 
+    cy.findByLabelText("Chart title").should("have.value", "Cats vs Dogs")
+    cy.findByLabelText("X label").should("have.value", "Cats")
+    cy.findByLabelText("Y label").should("have.value", "Dogs")
+
     cy.findByText("Bar").click()
 
     cy.get("[data-test-id='x1']").should("have.value", "1")
@@ -90,14 +96,18 @@ describe('Charts', () => {
     cy.get("[data-test-id='x5']").should("have.value", "5")
     cy.get("[data-test-id='y5']").should("have.value", "40")
 
+    cy.findByLabelText("Chart title").should("have.value", "Cats vs Dogs")
+    cy.findByLabelText("X label").should("have.value", "Cats")
+    cy.findByLabelText("Y label").should("have.value", "Dogs")
   })
 })
 
-describe('Charts', () => {
+describe('Saving/Loading', () => {
   it('can save a chart to the gallery', () => {
     cy.visit('localhost:8080')
 
     cy.contains("Line").click()
+    cy.contains("Chart title").type("Cats vs Dogs")
     cy.contains("X label").type("Cats")
     cy.contains("Y label").type("Dogs")
 
@@ -132,13 +142,14 @@ describe('Charts', () => {
 
     cy.contains("Gallery").click()
 
-    cy.findByRole("img").should("exist")
+    cy.findByText("Cats vs Dogs").should("exist")
   })
 
   it('can open a chart in the gallery', () => {
     cy.visit('localhost:8080')
 
     cy.contains("Line").click()
+    cy.contains("Chart title").type("Cats vs Dogs")
     cy.contains("X label").type("Cats")
     cy.contains("Y label").type("Dogs")
 
@@ -173,7 +184,7 @@ describe('Charts', () => {
 
     cy.contains("Gallery").click()
 
-    cy.findByRole("img").click()
+    cy.findByText("Cats vs Dogs").click()
 
     cy.get("[data-test-id='x1']").should("have.value", "1")
     cy.get("[data-test-id='y1']").should("have.value", "3")
@@ -185,48 +196,9 @@ describe('Charts', () => {
     cy.get("[data-test-id='y4']").should("have.value", "25")
     cy.get("[data-test-id='x5']").should("have.value", "5")
     cy.get("[data-test-id='y5']").should("have.value", "40")
-  })
-})
 
-describe('Charts', () => {
-  it('can save a chart to the gallery', () => {
-    cy.visit('localhost:8080')
-
-    cy.contains("Line").click()
-    cy.contains("X label").type("Cats")
-    cy.contains("Y label").type("Dogs")
-
-    cy.findByText("X").type("1")
-    cy.findByText("Y").type("3")
-
-    cy.contains("Generate chart").click()
-
-    cy.contains("Save chart").click()
-
-    cy.contains("Gallery").click()
-
-    cy.findByRole("img").should("exist")
-  })
-
-  it('can open a chart in the gallery', () => {
-    cy.visit('localhost:8080')
-
-    cy.contains("Line").click()
-    cy.contains("X label").type("Cats")
-    cy.contains("Y label").type("Dogs")
-
-    cy.findByText("X").type("1")
-    cy.findByText("Y").type("3")
-
-    cy.contains("Generate chart").click()
-
-    cy.contains("Save chart").click()
-
-    cy.contains("Gallery").click()
-
-    cy.findByRole("img").click()
-
-    cy.findByDisplayValue("1").should("exist")
-    cy.findByDisplayValue("3").should("exist")
+    cy.findByLabelText("Chart title").should("have.value", "Cats vs Dogs")
+    cy.findByLabelText("X label").should("have.value", "Cats")
+    cy.findByLabelText("Y label").should("have.value", "Dogs")
   })
 })
